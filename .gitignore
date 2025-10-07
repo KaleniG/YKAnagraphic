@@ -1,0 +1,20 @@
+# === PHP / Composer ===
+composer.phar
+/vendor/
+
+# === Logs ===
+*.log
+
+# === Assets / Build Artifacts ===
+*.css.map
+*.css
+
+# Temporary files
+.tmp/
+temp/
+
+# === Environment Files ===
+.env
+.env.*.local
+.env.local
+.env.php
