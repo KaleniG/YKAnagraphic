@@ -17,10 +17,10 @@ $asset = new AssetManager();
   <title>Anagraphics</title>
 </head>
 
-<body>
-  <form method="post">
+<body class="edit">
+  <form method="post" class="edit">
     <?php if (isset($this->anagraphics)): ?>
-      <table>
+      <table class="edit">
         <thead>
           <tr>
             <th>Name</th>
@@ -35,39 +35,16 @@ $asset = new AssetManager();
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($this->anagraphics as $anagraphic):
-            $id = $anagraphic["id"];
-            $name = $anagraphic["name"];
-            $surname = $anagraphic["surname"];
-            $email = $anagraphic["email"];
-            $phone_number = $anagraphic["phone_number"];
-            $city_name = $anagraphic["city_name"];
-            $way_name = $anagraphic["way_name"];
-            $way_number = $anagraphic["way_number"];
-            $checked = ($anagraphic["enabled"] == "t") ? "checked" : "";
-          ?>
-            <tr anagraphic-id="<?= $id ?>">
-              <td><input type="text" name="name" value="<?= $name ?>" disabled></td>
-              <td><input type="text" name="surname" value="<?= $surname ?>" disabled></td>
-              <td><input type="email" name="email" value="<?= $email ?>"></td>
-              <td><input type="number" name="phone_number" value="<?= $phone_number ?>"></td>
-              <td><input type="text" name="city_name" value="<?= $city_name ?>"></td>
-              <td><input type="text" name="way_name" value="<?= $way_name ?>"></td>
-              <td><input type="text" name="way_number" value="<?= $way_number ?>"></td>
-              <td><input type="checkbox" name="enabled" <?= $checked ?>></td>
-              <td></td>
-            </tr>
-          <?php endforeach; ?>
           <tr id="new_row">
-            <td><input type="text" name="name"></td>
-            <td><input type="text" name="surname"></td>
-            <td><input type="email" name="email"></td>
-            <td><input type="number" name="phone_number"></td>
-            <td><input type="text" name="city_name"></td>
-            <td><input type="text" name="way_name"></td>
-            <td><input type="text" name="way_number"></td>
-            <td><input type="checkbox" name="enabled"></td>
-            <td><button type="button">Add</button></td>
+            <td><input type="text" name="name" class="edit"></td>
+            <td><input type="text" name="surname" class="edit"></td>
+            <td><input type="email" name="email" class="edit"></td>
+            <td><input type="number" name="phone_number" class="edit"></td>
+            <td><input type="text" name="city_name" class="edit"></td>
+            <td><input type="text" name="way_name" class="edit"></td>
+            <td><input type="text" name="way_number" class="edit"></td>
+            <td><input type="checkbox" name="enabled" class="edit"></td>
+            <td><button type="button" class="edit">Add</button></td>
           </tr>
         </tbody>
       </table>
@@ -78,4 +55,7 @@ $asset = new AssetManager();
 </html>
 
 <!-- SCRIPTS LOADING -->
+<script>
+  const anagraphicsData = <?= json_encode($this->anagraphics, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+</script>
 <script src="js/EditAnagraphics.js"></script>

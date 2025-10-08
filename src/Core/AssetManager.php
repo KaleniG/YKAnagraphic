@@ -5,7 +5,7 @@ namespace App\Core;
 class AssetManager
 {
   private $css = [
-    //"assets/css/style.css"
+    "assets/css/style.css"
   ];
 
   private $js = [

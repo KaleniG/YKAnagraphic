@@ -68,7 +68,6 @@ class AnagraphicController
     ]);
   }
 
-
   private function handleOperationRemove()
   {
     $anagraphic = new Anagraphic();

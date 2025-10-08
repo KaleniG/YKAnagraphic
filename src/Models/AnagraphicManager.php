@@ -52,7 +52,14 @@ class AnagraphicManager extends Model
 
     if (!$result) Log::error("Query failed: " . Model::getError());
 
-    return pg_fetch_all($result);
+    $anagraphics = pg_fetch_all($result);
+
+
+    foreach ($anagraphics as $anagraphic) {
+      $anagraphic["enabled"] = ($anagraphic["enabled"] === "t") ? true : false;
+    }
+
+    return $anagraphics;
   }
 
   public function add(Anagraphic $anagraphic): int
@@ -95,6 +102,8 @@ class AnagraphicManager extends Model
   public function update(Anagraphic $anagraphic)
   {
     $this->prepareAll();
+
+    Log::info(var_export($anagraphic, true));
 
     $result = pg_execute(
       Model::getConn(),

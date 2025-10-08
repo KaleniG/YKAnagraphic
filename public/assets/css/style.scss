@@ -1,0 +1,627 @@
+$color-primary: #8a6da5;
+$color-primary-light: #b08fe0;
+$color-primary-dark: #5d4989;
+$color-background: #f2e5f7;
+$color-background-gradient: #7f44f7;
+$color-form-backgrounds: rgba(255, 255, 255, 0.4);
+
+$color-primary: #444444;
+$color-primary-light: #888888;
+$color-primary-dark: #222222;
+$color-background: #f5f5f5;
+$color-background-gradient: #cccccc;
+$color-form-backgrounds: rgba(255, 255, 255, 0.4);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: $color-primary-light;
+  color: $color-background;
+}
+
+::-moz-selection {
+  background-color: $color-primary-light;
+  color: $color-background;
+}
+
+// BODY
+
+body {
+  display: flex;
+  justify-content: center;
+  background-color: $color-background;
+  background-image: radial-gradient($color-background-gradient 0.5px, $color-background 0.8px);
+  background-size: 8px 8px;
+  font-family: 'Montserrat', sans-serif;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body.home,
+body.login {
+  align-items: center;
+  height: 100vh;
+}
+
+body.edit,
+body.present {
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+// FORM
+form {
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  border: 1px solid $color-primary;
+  background-color: $color-form-backgrounds;
+  border-radius: 3px;
+  gap: 20px;
+}
+
+form.home,
+form.login {
+  width: 400px;
+  max-width: 400px;
+}
+
+form.home {
+  padding: 50px 50px;
+  gap: 20px;
+}
+
+form.login {
+  padding: 40px 50px;
+  gap: 15px;
+}
+
+form.edit,
+form.present {
+  width: 100%;
+  margin: 40px;
+  padding: 40px 50px;
+}
+
+// BUTTON
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 560;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  background-color: $color-form-backgrounds;
+  color: $color-primary;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease, background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, opacity 0.4s ease;
+  width: 100px;
+}
+
+button:hover {
+  color: $color-primary-light;
+  border-color: $color-primary-light;
+}
+
+button.home {
+  padding: 15px 50px;
+  font-size: 17px;
+}
+
+button.login {
+  padding: 15px 110px;
+  font-size: 17px;
+}
+
+button.edit,
+button.present {
+  padding: 12px 20px;
+  font-size: 15px;
+}
+
+button.edit.option-button,
+button.edit.option-button.save {
+  font-size: 14px;
+  padding: 8px;
+  width: 48%;
+  margin: 0;
+}
+
+button.edit.option-button.save,
+button.edit.account.option-button.save,
+button.present.reset {
+  opacity: 0;
+}
+
+button.edit.option-button.save.visible,
+button.edit.account.option-button.save.visible,
+button.present.reset.visible {
+  opacity: 1;
+}
+
+button.edit.account.option-button.save {
+  width: 20%;
+  font-size: 14px;
+  padding: 8px;
+  margin: 0;
+}
+
+button.present.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  padding: 10px;
+  border: none;
+  background: $color-primary;
+  color: $color-background;
+  cursor: pointer;
+  border-radius: 6px;
+  height: 300px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+button.present.arrow:hover {
+  background-color: $color-primary-light;
+  color: $color-background;
+}
+
+button.present.arrow.right {
+  transform: none;
+}
+
+// H
+h2,
+h3 {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h2.login,
+h3.login {
+  color: $color-primary;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h2.present.course.title {
+  font-size: 1.4rem;
+  color: $color-primary-dark;
+}
+
+h3.present.course.subject {
+  font-size: 1rem;
+  color: $color-primary;
+}
+
+// INPUT
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px $color-background inset;
+  -webkit-text-fill-color: $color-primary;
+  caret-color: $color-primary;
+}
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px $color-background inset;
+  -webkit-text-fill-color: $color-primary;
+  caret-color: $color-primary;
+}
+
+input[type="text"].login {
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  color: $color-primary;
+  background-color: $color-form-backgrounds;
+  transition: transform 0.2s ease, background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+}
+
+input[type="text"].login::placeholder {
+  color: $color-primary;
+  opacity: 1;
+  transition: opacity 0.3s ease, color 0.5s ease;
+  user-select: none;
+}
+
+input[type="text"].login:hover,
+input[type="text"].login:focus {
+  border-color: $color-primary-light;
+  outline: none;
+}
+
+input[type="text"].login:hover::placeholder,
+input[type="text"].login:focus::placeholder {
+  color: $color-primary-light;
+  opacity: 0;
+}
+
+input[type="text"].edit,
+input[type="email"].edit,
+input[type="number"].edit {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  margin: 0;
+  border: 1px solid $color-primary;
+  background-color: $color-form-backgrounds;
+  border-radius: 3px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: $color-primary;
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, transform 0.2s ease;
+}
+
+input[type="text"].edit:focus,
+input[type="email"].edit:focus,
+input[type="number"].edit:focus {
+  border-color: $color-primary-light;
+  outline: none;
+  color: $color-primary-light;
+}
+
+input[type="number"].edit::-webkit-inner-spin-button,
+input[type="number"].edit::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"].edit {
+  -moz-appearance: textfield;
+}
+
+input.edit[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  accent-color: $color-primary;
+  transition: accent-color 0.3s ease, transform 0.2s ease;
+  outline: none;
+  box-shadow: none;
+}
+
+input.edit[type="checkbox"]:hover {
+  accent-color: $color-primary-light;
+}
+
+input.edit[type="checkbox"]:checked {
+  accent-color: $color-primary;
+}
+
+input[type="text"].present,
+input[type="text"].present.navbar {
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  color: $color-primary;
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, transform 0.2s ease;
+}
+
+input[type="text"].present {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  margin: 0;
+  font-size: 14px;
+}
+
+input[type="text"].present.navbar {
+  font-size: 15px;
+  font-weight: 560;
+  background-color: $color-form-backgrounds;
+  cursor: text;
+  padding: 12px 20px;
+  width: 360px;
+}
+
+input[type="text"].present:hover,
+input[type="text"].present:focus,
+input[type="text"].present.navbar:hover,
+input[type="text"].present.navbar:focus {
+  border-color: $color-primary-light;
+  color: $color-primary-light;
+  outline: none;
+}
+
+input[type="text"].present:disabled:hover,
+input[type="text"].edit:disabled:hover {
+  border: 1px solid $color-primary;
+  color: $color-primary;
+}
+
+// DIV
+div.edit.navbar,
+div.edit.account,
+div.present.navbar,
+div.present.panoramic {
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  padding: 15px;
+  background-color: $color-form-backgrounds;
+  gap: 20px;
+}
+
+div.edit.navbar,
+div.present.navbar {
+  display: flex;
+  align-items: center;
+}
+
+div.edit.account {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+div.present.navbar {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+div.present.panoramic {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  border-radius: 8px;
+  background: $color-form-backgrounds;
+  padding: 20px;
+}
+
+div.present.course.box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  position: relative;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+div.present.course.box.fade-out {
+  opacity: 0;
+}
+
+// SELECT
+select {
+  user-select: none;
+}
+
+select.edit,
+select.edit[multiple],
+select.edit.navbar,
+select.present.navbar {
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  background-color: $color-form-backgrounds;
+  color: $color-primary;
+  cursor: pointer;
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, transform 0.2s ease;
+}
+
+select.edit,
+select.edit[multiple] {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+select.edit[multiple] {
+  font-size: 12px;
+  padding: 5px;
+  overflow-y: auto;
+  scrollbar-color: $color-primary $color-form-backgrounds;
+  height: calc(2 * 1.5em + 16px);
+  min-height: calc(2 * 1.5em + 16px);
+  max-height: calc(2 * 1.5em + 16px);
+}
+
+select.edit.navbar,
+select.present.navbar {
+  font-size: 15px;
+  font-weight: 560;
+  padding: 12px 20px;
+  width: 180px;
+}
+
+select.edit:hover,
+select.edit:focus,
+select.edit[multiple]:hover,
+select.edit[multiple]:focus,
+select.edit.navbar:hover,
+select.edit.navbar:focus,
+select.present.navbar:hover,
+select.present.navbar:focus {
+  border-color: $color-primary-light;
+  color: $color-primary-light;
+  outline: none;
+}
+
+select.edit option,
+select.edit[multiple] option {
+  background-color: $color-background;
+  color: $color-primary;
+  padding: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+select.edit option:checked,
+select.edit[multiple] option:checked {
+  background-color: $color-primary;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+select.edit option:not(:checked):hover,
+select.edit[multiple] option:not(:checked):hover {
+  color: $color-primary;
+}
+
+select.edit option:checked:hover,
+select.edit[multiple] option:checked:hover {
+  color: $color-background;
+}
+
+select.edit option:disabled,
+select.present option:disabled {
+  color: $color-primary-dark;
+}
+
+select.edit::-webkit-scrollbar,
+select.edit[multiple]::-webkit-scrollbar {
+  width: 8px;
+  background: $color-form-backgrounds;
+  border-radius: 4px;
+  display: none;
+}
+
+select.edit::-webkit-scrollbar-thumb,
+select.edit[multiple]::-webkit-scrollbar-thumb {
+  background-color: $color-primary;
+  border-radius: 4px;
+  border: 2px solid $color-form-backgrounds;
+}
+
+// TABLE + ELEMENTS
+table.edit,
+table.present {
+  width: 100%;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+table tbody tr {
+  transition: background-color 0.8s ease;
+}
+
+table tbody tr.saved {
+  background-color: $color-background-gradient;
+}
+
+table.edit th,
+table.edit td,
+table.present th,
+table.present td {
+  padding: 12px;
+  background-color: $color-form-backgrounds;
+  border: 1px solid rgba($color-primary, 0.4);
+}
+
+table.edit th,
+table.present th {
+  text-align: center;
+  background-color: $color-primary;
+  color: $color-background;
+  font-weight: 600;
+}
+
+table.edit th:first-child,
+table.present th:first-child {
+  border-top-left-radius: 3px;
+}
+
+table.edit th:last-child,
+table.present th:last-child {
+  border-top-right-radius: 3px;
+}
+
+table.edit tr:last-child td:first-child,
+table.present tr:last-child td:first-child {
+  border-bottom-left-radius: 3px;
+}
+
+table.edit tr:last-child td:last-child,
+table.present tr:last-child td:last-child {
+  border-bottom-right-radius: 3px;
+}
+
+// TEXTAREA
+textarea::-webkit-scrollbar {
+  display: none;
+}
+
+textarea.edit,
+textarea.present {
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-primary;
+  background-color: $color-form-backgrounds;
+  border: 1px solid $color-primary;
+  border-radius: 3px;
+  padding: 8px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  cursor: text;
+  resize: none;
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, transform 0.2s ease;
+}
+
+textarea.edit:disabled,
+textarea.present:disabled {
+  cursor: default;
+}
+
+textarea.edit:disabled:hover,
+textarea.present:disabled:hover {
+  color: $color-primary;
+  background-color: $color-form-backgrounds;
+  border: 1px solid $color-primary;
+}
+
+textarea.edit:hover,
+textarea.present:hover,
+textarea.edit:focus,
+textarea.present:focus {
+  border-color: $color-primary-light;
+  color: $color-primary-light;
+  outline: none;
+}
+
+// LABEL
+label.edit {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-primary;
+  margin-bottom: 6px;
+  display: block;
+  cursor: default;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+// P
+p {
+  color: $color-primary;
+}
+
+p.present.course.description {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

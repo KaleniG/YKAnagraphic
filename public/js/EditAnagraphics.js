@@ -1,91 +1,110 @@
-$(document).ready(() => {
-  $("tr[anagraphic-id]").each(function () {
-    const row = $(this);
-    const id = row.attr("anagraphic-id");
-    const tdOperations = row.find("td:last");
+function addRow(element, index) {
+  const row = $("<tr>", { "anagraphic-id": element.id });
 
-    // Function to add Save button
-    const addSaveButton = () => {
-      if (tdOperations.find(".save-button").length === 0) {
-        const saveBtn = $("<button>", {
-          type: "button",
-          text: "Save Changes",
-          class: "save-button",
-          click: function () {
-            const dataToSend = {
-              operation: "update",
-              id: id,
-              name: row.find("[name='name']").val(),
-              surname: row.find("[name='surname']").val(),
-              email: row.find("[name='email']").val(),
-              phone_number: row.find("[name='phone_number']").val(),
-              city_name: row.find("[name='city_name']").val(),
-              way_name: row.find("[name='way_name']").val(),
-              way_number: row.find("[name='way_number']").val(),
-            };
-
-            if (row.find("[name='enabled']").prop("checked")) {
-              dataToSend.enabled = "yes";
-            }
-
-            console.info(dataToSend);
-
-            $.ajax({
-              url: "index.php",
-              method: "POST",
-              data: dataToSend,
-              dataType: "json",
-              success: (res) => {
-                if (res.status !== "ok") alert("Failed to update record");
-              },
-              error: (xhr, status, error) => console.error(error)
-            });
-          }
-        });
-        tdOperations.append(saveBtn);
-      }
+  const updateGatherInfo = () => {
+    const updateInfo = {
+      operation: "update",
+      id: element.id,
+      name: nameInput.val(),
+      surname: surnameInput.val(),
+      email: emailInput.val(),
+      phone_number: phoneNumberInput.val(),
+      city_name: cityNameInput.val(),
+      way_name: wayNameInput.val(),
+      way_number: wayNumberInput.val()
     };
+    if (enabledInput.prop("checked"))
+      updateInfo.enabled = "yes";
 
-    // Function to add Remove button if unchecked
-    const toggleRemoveButton = () => {
-      tdOperations.find(".remove-button").remove();
-      if (!row.find("[name='enabled']").prop("checked")) {
-        const removeBtn = $("<button>", {
-          type: "button",
-          text: "Remove",
-          class: "remove-button",
-          click: function () {
-            $.ajax({
-              url: "index.php",
-              method: "POST",
-              data: {
-                operation: "remove",
-                id: id
-              },
-              dataType: "json",
-              success: (res) => {
-                if (res.status === "ok") row.remove();
-                else alert("Failed to remove record");
-              },
-              error: (xhr, status, error) => console.error(error)
-            });
+    return updateInfo;
+  };
+
+  const updateOperation = () => {
+    $.ajax({
+      url: "index.php",
+      method: "POST",
+      data: updateGatherInfo(),
+      dataType: "json",
+      success: (res) => {
+        if (res.status === "ok") {
+          row.addClass("saved");
+          setTimeout(() => row.removeClass("saved"), 1200);
+        } else {
+          alert("Failed to update record");
+        }
+      },
+      error: (xhr, status, error) => console.error(error)
+    });
+  };
+
+  const removeOperation = () => {
+    $.ajax({
+      url: "index.php",
+      method: "POST",
+      data: { operation: "remove", id: element.id },
+      dataType: "json",
+      success: (res) => {
+        if (res.status === "ok") {
+          if (res.status === "ok") {
+            row.fadeOut(400, () => row.remove());
+            delete anagraphicsData[index];
           }
-        });
-        tdOperations.append(removeBtn);
-      }
-    };
+        }
+        else alert("Failed to remove record");
+      },
+      error: (xhr, status, error) => console.error(error)
+    });
+  };
 
-    // Initial setup
-    toggleRemoveButton();
-    addSaveButton();
+  const nameInput = $("<input>", { type: "text", value: element.name, class: "edit", disabled: true });
+  const surnameInput = $("<input>", { type: "text", value: element.surname, class: "edit", disabled: true });
+  const emailInput = $("<input>", { type: "email", value: element.email, class: "edit", }).on("change", updateOperation);
+  const phoneNumberInput = $("<input>", { type: "number", value: element.phone_number, class: "edit", }).on("change", updateOperation);
+  const cityNameInput = $("<input>", { type: "text", value: element.city_name, class: "edit", }).on("change", updateOperation);
+  const wayNameInput = $("<input>", { type: "text", value: element.way_name, class: "edit", }).on("change", updateOperation);
+  const wayNumberInput = $("<input>", { type: "text", value: element.way_number, class: "edit", }).on("change", updateOperation);
+  const enabledInput = $("<input>", { type: "checkbox", class: "edit", checked: (element.enabled == "t") ? true : false });
 
-    // Toggle remove button when checkbox changes
-    row.find("[name='enabled']").on("change", toggleRemoveButton);
-
-    // Add Save button on input changes
-    row.find("input[type!='checkbox']").on("input", addSaveButton);
+  const removeButton = $("<button>", {
+    type: "button",
+    text: "Remove",
+    class: "remove-button edit",
+    click: removeOperation
   });
 
+  enabledInput.on("change", function () {
+    updateOperation();
+    const td = row.find("td:last");
+    td.find(".remove-button").remove();
+    if (!$(this).prop("checked")) {
+      td.append(removeButton);
+    }
+  });
+
+  row.append($("<td>").append(nameInput));
+  row.append($("<td>").append(surnameInput));
+  row.append($("<td>").append(emailInput));
+  row.append($("<td>").append(phoneNumberInput));
+  row.append($("<td>").append(cityNameInput));
+  row.append($("<td>").append(wayNameInput));
+  row.append($("<td>").append(wayNumberInput));
+  row.append($("<td>").append(enabledInput));
+  row.append($("<td>"));
+
+  if (!(element.enabled == "t")) row.find("td:last").append(removeButton);
+
+  row.css("display", "none");
+  $("tbody tr:last").before(row);
+  row.delay(index * 100).fadeIn(300);
+}
+
+function handlePopulate() {
+  Object.values(anagraphicsData).forEach((element, index) => {
+    addRow(element, index);
+  });
+}
+
+function handleAddSection() {
   $("#new_row button").on("click", (e) => {
 
     const dataToSend = {
@@ -110,21 +129,20 @@ $(document).ready(() => {
       dataType: 'json',
       success: (res) => {
         if (res.status === "ok") {
-          const newRow = `
-              <tr anagraphic-id="${res.id}">
-                <td><input type="text" name="name" value="${dataToSend.name}" disabled></td>
-                <td><input type="text" name="surname" value="${dataToSend.surname}" disabled></td>
-                <td><input type="email" name="email" value="${dataToSend.email}"></td>
-                <td><input type="number" name="phone_number" value="${dataToSend.phone_number}"></td>
-                <td><input type="text" name="city_name" value="${dataToSend.city_name}"></td>
-                <td><input type="text" name="way_name" value="${dataToSend.way_name}"></td>
-                <td><input type="text" name="way_number" value="${dataToSend.way_number}"></td>
-                <td><input type="checkbox" name="enabled" ${dataToSend.enabled ? "checked" : ""}></td>
-                <td></td>
-              </tr>
-            `;
+          const element = {
+            id: res.id,
+            name: dataToSend.name,
+            surname: dataToSend.surname,
+            email: dataToSend.email,
+            phone_number: dataToSend.phone_number,
+            city_name: dataToSend.city_name,
+            way_name: dataToSend.way_name,
+            way_number: dataToSend.way_number,
+            enabled: dataToSend.enabled ? "t" : "f"
+          };
 
-          $("#new_row").before(newRow);
+          addRow(element, 1);
+
           $("#new_row input[type!='checkbox']").val('');
           $("#new_row [name='enabled']").prop('checked', false);
         } else {
@@ -136,4 +154,9 @@ $(document).ready(() => {
       }
     });
   });
+}
+
+$(document).ready(() => {
+  handlePopulate();
+  handleAddSection();
 });
