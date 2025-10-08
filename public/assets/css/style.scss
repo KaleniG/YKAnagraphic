@@ -519,6 +519,11 @@ table tbody tr.saved {
   background-color: $color-background-gradient;
 }
 
+table td {
+  height: 70px;
+  vertical-align: middle;
+}
+
 table.edit th,
 table.edit td,
 table.present th,

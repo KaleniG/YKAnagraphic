@@ -19,17 +19,24 @@ $asset = new AssetManager();
 
 <body class="edit">
   <form method="post" class="edit">
+    <div class="edit navbar">
+      <select class="edit navbar">
+        <option value="" selected>No filter</option>
+        <option value="enabled">Enabled Records</option>
+        <option value="disabled">Disabled Records</option>
+      </select>
+    </div>
     <?php if (isset($this->anagraphics)): ?>
       <table class="edit">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>E-mail</th>
-            <th>Phone Number</th>
-            <th>City</th>
-            <th>Way</th>
-            <th>Number</th>
+            <th data-field="name" data-order="none">Name</th>
+            <th data-field="surname" data-order="none">Surname</th>
+            <th data-field="email" data-order="none">E-mail</th>
+            <th data-field="phone_number" data-order="none">Phone Number</th>
+            <th data-field="city_name" data-order="none">City</th>
+            <th data-field="way_name" data-order="none">Way</th>
+            <th data-field="way_number" data-order="none">Number</th>
             <th>Enabled</th>
             <th>Operations</th>
           </tr>
@@ -57,5 +64,6 @@ $asset = new AssetManager();
 <!-- SCRIPTS LOADING -->
 <script>
   const anagraphicsData = <?= json_encode($this->anagraphics, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+  const ordered = anagraphicsData;
 </script>
 <script src="js/EditAnagraphics.js"></script>
