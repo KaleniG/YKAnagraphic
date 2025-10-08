@@ -1,17 +1,12 @@
-let currentFilter = ""; // "", "enabled", "disabled"
+let currentFilter = "";
 let currentSortField = null;
 let currentSortOrder = "none";
 
-// ✅ Add a single delegated click handler for all remove buttons
 $(document).on("click", ".remove-button", function () {
   const row = $(this).closest("tr");
   const id = row.attr("anagraphic-id");
   removeOperation(id, row);
 });
-
-// ================================================================
-// 🔧 AJAX OPERATIONS
-// ================================================================
 
 function updateOperation(element, row, updateInfo) {
   $.ajax({
@@ -21,13 +16,11 @@ function updateOperation(element, row, updateInfo) {
     dataType: "json",
     success: (res) => {
       if (res.status === "ok") {
-        // Update local data
         Object.assign(element, {
           ...updateInfo,
           enabled: updateInfo.enabled === "yes" ? "t" : "f"
         });
 
-        // Feedback
         row.addClass("saved");
         setTimeout(() => row.removeClass("saved"), 1200);
       } else {
@@ -57,18 +50,12 @@ function removeOperation(id, row) {
   });
 }
 
-// ================================================================
-// 🧱 ROW CREATION
-// ================================================================
-
 function addRow(element, index) {
-  // Filter
+
   if (currentFilter === "enabled" && element.enabled === "f") return;
   if (currentFilter === "disabled" && element.enabled === "t") return;
 
   const row = $("<tr>", { "anagraphic-id": element.id });
-
-  // --- Input creation helper
   const mkInput = (type, val, onChange, disabled) =>
     $("<input>", {
       type,
@@ -80,10 +67,8 @@ function addRow(element, index) {
       spellcheck: false
     }).on("change", onChange);
 
-  // --- Collect update info
   const gatherUpdate = () => {
     const enabledChecked = enabledInput.prop("checked");
-
     const data = {
       operation: "update",
       id: element.id,
@@ -95,15 +80,12 @@ function addRow(element, index) {
       way_name: wayNameInput.val(),
       way_number: wayNumberInput.val()
     };
-
     if (enabledChecked)
       data.enabled = "yes"
-
     return data;
   };
 
   const onChange = () => updateOperation(element, row, gatherUpdate());
-
   const nameInput = mkInput("text", element.name, onChange, true);
   const surnameInput = mkInput("text", element.surname, onChange, true);
   const emailInput = mkInput("email", element.email, onChange, element.enabled !== "t");
@@ -118,17 +100,14 @@ function addRow(element, index) {
     checked: element.enabled === "t"
   });
 
-  // --- Handle checkbox toggle
   enabledInput.on("change", function () {
     const isEnabled = $(this).prop("checked");
     const updateInfo = gatherUpdate();
     updateOperation(element, row, updateInfo);
 
-    // Enable/disable inputs
     [emailInput, phoneNumberInput, cityNameInput, wayNameInput, wayNumberInput]
       .forEach(input => input.prop("disabled", !isEnabled));
 
-    // Show/hide remove button
     const td = row.find("td:last");
     td.find(".remove-button").remove();
     if (!isEnabled) {
@@ -141,14 +120,12 @@ function addRow(element, index) {
       td.append(removeButton);
     }
 
-    // Handle filtering dynamically
     if (currentFilter === "enabled" && !isEnabled)
       row.fadeOut(400, () => row.remove());
     else if (currentFilter === "disabled" && isEnabled)
       row.fadeOut(400, () => row.remove());
   });
 
-  // --- Row assembly
   row.append($("<td>").append(nameInput))
     .append($("<td>").append(surnameInput))
     .append($("<td>").append(emailInput))
@@ -159,7 +136,6 @@ function addRow(element, index) {
     .append($("<td>").append(enabledInput))
     .append($("<td>"));
 
-  // Add remove button only if disabled
   if (element.enabled !== "t") {
     row.find("td:last").append(
       $("<button>", {
@@ -171,22 +147,16 @@ function addRow(element, index) {
     );
   }
 
-  // Insert row
   row.hide();
   $("tbody tr:last").after(row);
   row.delay(index * 100).fadeIn(300);
 }
-
-// ================================================================
-// 🪄 TABLE CONTROLS
-// ================================================================
 
 function handlePopulate() {
   $("tbody [anagraphic-id]").remove();
 
   let data = [...anagraphicsData];
 
-  // Apply sorting
   if (currentSortField && currentSortOrder !== "none") {
     data.sort((a, b) => {
       const fa = (a[currentSortField] + "").toLowerCase();
@@ -279,10 +249,6 @@ function handleAddSection() {
     });
   });
 }
-
-// ================================================================
-// 🚀 INIT
-// ================================================================
 
 $(document).ready(() => {
   handleSort();
