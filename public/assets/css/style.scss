@@ -515,6 +515,11 @@ table tbody tr {
   transition: background-color 0.8s ease;
 }
 
+table thead th {
+  cursor: default;
+  user-select: none;
+}
+
 table tbody tr.saved {
   background-color: $color-background-gradient;
 }

@@ -33,23 +33,23 @@ $asset = new AssetManager();
             <th data-field="name" data-order="none">Name</th>
             <th data-field="surname" data-order="none">Surname</th>
             <th data-field="email" data-order="none">E-mail</th>
-            <th data-field="phone_number" data-order="none">Phone Number</th>
+            <th>Phone Number</th>
             <th data-field="city_name" data-order="none">City</th>
             <th data-field="way_name" data-order="none">Way</th>
-            <th data-field="way_number" data-order="none">Number</th>
+            <th>Number</th>
             <th>Enabled</th>
             <th>Operations</th>
           </tr>
         </thead>
         <tbody>
           <tr id="new_row">
-            <td><input type="text" name="name" class="edit"></td>
-            <td><input type="text" name="surname" class="edit"></td>
-            <td><input type="email" name="email" class="edit"></td>
-            <td><input type="number" name="phone_number" class="edit"></td>
-            <td><input type="text" name="city_name" class="edit"></td>
-            <td><input type="text" name="way_name" class="edit"></td>
-            <td><input type="text" name="way_number" class="edit"></td>
+            <td><input type="text" name="name" class="edit" autocomplete="off" autocorrect="off" autocapitalize="on" spellcheck="false"></td>
+            <td><input type="text" name="surname" class="edit" autocomplete="off" autocorrect="off" autocapitalize="on" spellcheck="false"></td>
+            <td><input type="email" name="email" class="edit" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></td>
+            <td><input type="number" name="phone_number" class="edit" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></td>
+            <td><input type="text" name="city_name" class="edit" autocomplete="off" autocorrect="off" autocapitalize="on" spellcheck="false"></td>
+            <td><input type="text" name="way_name" class="edit" autocomplete="off" autocorrect="off" autocapitalize="on" spellcheck="false"></td>
+            <td><input type="text" name="way_number" class="edit" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></td>
             <td><input type="checkbox" name="enabled" class="edit"></td>
             <td><button type="button" class="edit">Add</button></td>
           </tr>

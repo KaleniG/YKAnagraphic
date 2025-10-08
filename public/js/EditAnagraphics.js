@@ -74,7 +74,10 @@ function addRow(element, index) {
       type,
       value: val,
       class: "edit",
-      disabled
+      disabled,
+      autocomplete: false,
+      autocorrect: false,
+      spellcheck: false
     }).on("change", onChange);
 
   // --- Collect update info
@@ -240,6 +243,21 @@ function handleAddSection() {
       way_number: $("#new_row [name='way_number']").val(),
       enabled: $("#new_row [name='enabled']").prop("checked") ? "yes" : "no"
     };
+
+    dataToSend.name = dataToSend.name.charAt(0).toUpperCase() + dataToSend.name.slice(1);
+    dataToSend.surname = dataToSend.surname.charAt(0).toUpperCase() + dataToSend.surname.slice(1);
+
+    dataToSend.city_name = dataToSend.city_name.charAt(0).toUpperCase() + dataToSend.city_name.slice(1);
+    dataToSend.way_name = dataToSend.way_name.charAt(0).toUpperCase() + dataToSend.way_name.slice(1);
+
+    const duplicateExists = anagraphicsData.some(anagraphic =>
+      anagraphic.name === dataToSend.name && anagraphic.surname === dataToSend.surname
+    );
+
+    if (duplicateExists) {
+      alert("Trying to add an already existing record");
+      return;
+    }
 
     $.ajax({
       url: "index.php",
